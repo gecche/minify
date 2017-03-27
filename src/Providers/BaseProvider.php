@@ -137,9 +137,13 @@ abstract class BaseProvider implements Countable
     public function tags($baseUrl, $attributes)
     {
         $html = '';
+        $getString = array_get($attributes,'getString','');
+        if ($getString) {
+            unset($attributes['getString']);
+        }
         foreach($this->files as $file)
         {
-            $file = $baseUrl . str_replace($this->publicPath, '', $file);
+            $file = $baseUrl . str_replace($this->publicPath, '', $file) . $getString;
             $html .= $this->tag($file, $attributes);
         }
 
